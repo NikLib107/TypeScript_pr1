@@ -10,9 +10,18 @@ closeBtn.addEventListener('click', function () {
 window.addEventListener('scroll', function () {
     console.log('Scrolling...');
 });
-document.querySelector('.some-button').addEventListener('click', function () {
+var someButton = document.querySelector('.some-button');
+someButton.addEventListener('click', function () {
     alert('Button clicked!');
 });
-fetch('https://jsonplaceholder.typicode.com/todos/1')
+fetch('https://jsonplaceholder.typicode.com/posts')
     .then(function (response) { return response.json(); })
-    .then(function (json) { return console.log(json); });
+    .then(function (data) {
+    var postsContainer = document.querySelector('.posts');
+    data.forEach(function (post) {
+        var postElement = document.createElement('div');
+        postElement.classList.add('post');
+        postElement.innerHTML = "<h3>".concat(post.title, "</h3><p>").concat(post.body, "</p>");
+        postsContainer.appendChild(postElement);
+    });
+});
